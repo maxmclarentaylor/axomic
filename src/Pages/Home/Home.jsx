@@ -113,8 +113,6 @@ function Home() {
                 let value2 = (index + 1) * dataNumber
                 var slicedValue = dataValues.slice(value1,value2)
                 if(slicedValue.length > 0 && (index + 1) === currentPage){
-                    console.log("hit")
-                    console.log(slicedValue)
                     return  <Page  key={value[2]} dataValues={slicedValue}/>
                 }
             })}
