@@ -1,0 +1,23 @@
+Answer to Section B: 
+ 
+The goal here is to save a users preferences to allow them to access those preferences whenever they run up the app.  
+ 
+A useful set up would be a node/express (using the https protocol) application on the backend, which connected to a database to store all user preferences. 
+ 
+On the front end I would change the initial component to be rendered to a login page. 
+ 
+Here the user would either log in or sign up. 
+ 
+To do this I would use the axios library, and send other via a post request the users login credentials, or their new username and password. 
+ 
+When a new reference in the database had been created (or current user found), it would be easy to save to a session the reference point to the users row in the database.  
+ 
+From there any changes the user made in the home component, could be sent via an axios post request to the database. With a simple sql statement we could save into the database the users preferences for number of posts per page, and even the current page they are on. 
+ 
+To make changes to the components I created: 
+ 
+In the home component, in the useEffect, I would bring in an axios get request to express. To pull out the users preferences. In the .then of this http request when the preferences had been returned, I would then pass in the current argument that exists in the useEffect. This would ensure that when we update the components state with the data from the useQuery method call, it was also being updated with the users preferences from the database, allowing for a strong ux experience when loading the app. 
+ 
+I would then bring in a useEffect which was listening out for changes for dataNumber, and currentPage (maxNumber of pages can easily be calculated when we know the value of dataNumber, so we don’t need to save it to the database). The useEffect when triggered would make an axios post request to the backend, inserting into the database the newly changed values into the correct columns/row.  
+ 
+In order to prevent an excessive number of https requests being made, the ux could further be changed where we ask the user to save their preferences at any time. This would result in an useEffect listening to a boolen change in the state, and when changed to true, the values of dataNumber and currentPage would be posted to the express backend via axios. 
